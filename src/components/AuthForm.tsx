@@ -1,37 +1,37 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth";
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { supabase } from '@/integrations/supabase/client'
+import { useAuth } from '@/lib/auth'
 
-export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
+  const navigate = useNavigate()
+  const { user } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState<string | null>(null)
+  const [busy, setBusy] = useState(false)
 
   useEffect(() => {
-    if (user) navigate({ to: "/app", replace: true });
-  }, [user, navigate]);
+    if (user) navigate('/app', { replace: true })
+  }, [user, navigate])
 
   async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setBusy(true);
-    setError(null);
+    e.preventDefault()
+    setBusy(true)
+    setError(null)
     const { error: err } =
-      mode === "signup"
+      mode === 'signup'
         ? await supabase.auth.signUp({
             email,
             password,
             options: { emailRedirectTo: `${window.location.origin}/app` },
           })
-        : await supabase.auth.signInWithPassword({ email, password });
-    if (err) setError(err.message);
-    setBusy(false);
+        : await supabase.auth.signInWithPassword({ email, password })
+    if (err) setError(err.message)
+    setBusy(false)
   }
 
-  const isSignup = mode === "signup";
+  const isSignup = mode === 'signup'
 
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-background px-5 py-16">
@@ -41,7 +41,7 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
           ← Flight Price Notifier
         </Link>
         <h1 className="mt-4 text-2xl font-semibold">
-          {isSignup ? "建立帳號 / Sign up" : "登入 / Sign in"}
+          {isSignup ? '建立帳號 / Sign up' : '登入 / Sign in'}
         </h1>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <div>
@@ -77,20 +77,20 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
             disabled={busy}
             className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
           >
-            {busy ? "處理中…" : isSignup ? "註冊 / Sign up" : "登入 / Sign in"}
+            {busy ? '處理中…' : isSignup ? '註冊 / Sign up' : '登入 / Sign in'}
           </button>
         </form>
         <p className="mt-5 text-center text-sm text-muted-foreground">
           {isSignup ? (
             <>
-              已經有帳號？{" "}
+              已經有帳號？{' '}
               <Link to="/signin" className="text-accent hover:underline">
                 Sign in
               </Link>
             </>
           ) : (
             <>
-              還沒有帳號？{" "}
+              還沒有帳號？{' '}
               <Link to="/signup" className="text-accent hover:underline">
                 Sign up
               </Link>
@@ -99,5 +99,5 @@ export function AuthForm({ mode }: { mode: "signin" | "signup" }) {
         </p>
       </div>
     </div>
-  );
+  )
 }

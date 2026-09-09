@@ -1,30 +1,18 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth";
+import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
+import { supabase } from '@/integrations/supabase/client'
+import { useAuth } from '@/lib/auth'
 
-export const Route = createFileRoute("/_authenticated/app")({
-  head: () => ({
-    meta: [
-      { title: "Dashboard — Flight Price Notifier" },
-      { name: "description", content: "你的航線追蹤儀表板 — Flight Price Notifier。" },
-      { property: "og:title", content: "Dashboard — Flight Price Notifier" },
-      { property: "og:description", content: "Your flight price alert dashboard." },
-    ],
-  }),
-  component: AppShell,
-});
-
-function AppShell() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+export default function AppPage() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   async function handleSignOut() {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/signin", replace: true });
+    await queryClient.cancelQueries()
+    queryClient.clear()
+    await supabase.auth.signOut()
+    navigate('/signin', { replace: true })
   }
 
   return (
@@ -56,5 +44,5 @@ function AppShell() {
         </div>
       </main>
     </div>
-  );
+  )
 }

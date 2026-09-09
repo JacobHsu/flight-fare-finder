@@ -1,46 +1,27 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Reveal } from "@/components/Reveal";
-import { useAuth } from "@/lib/auth";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Flight Price Notifier — 機票降價通知" },
-      {
-        name: "description",
-        content:
-          "設定台北出發的航線與目標價，機票降到你的預算就寄 email 通知你。Set a route and a target price — we email you when the fare drops.",
-      },
-      { property: "og:title", content: "Flight Price Notifier — 機票降價通知" },
-      {
-        property: "og:description",
-        content: "Set a route and a target price — we email you when the fare drops.",
-      },
-    ],
-  }),
-  component: Index,
-});
+import { Link } from 'react-router-dom'
+import { Reveal } from '@/components/Reveal'
+import { useAuth } from '@/lib/auth'
 
 const features = [
   {
-    title: "盯緊熱門航線",
-    en: "Always-on route watching",
-    body: "持續監控台北出發的熱門航線（東京、首爾），自動抓最低票價。",
+    title: '盯緊熱門航線',
+    en: 'Always-on route watching',
+    body: '持續監控台北出發的熱門航線（東京、首爾），自動抓最低票價。',
   },
   {
-    title: "達標自動通知",
-    en: "Target-price email alerts",
-    body: "低於你設定的目標價，就寄 email 提醒你，附上立即訂購連結。",
+    title: '達標自動通知',
+    en: 'Target-price email alerts',
+    body: '低於你設定的目標價，就寄 email 提醒你，附上立即訂購連結。',
   },
   {
-    title: "隨時取消",
-    en: "Cancel anytime",
-    body: "月訂閱制，不想用隨時停，沒有綁約。",
+    title: '隨時取消',
+    en: 'Cancel anytime',
+    body: '月訂閱制，不想用隨時停，沒有綁約。',
   },
-];
+]
 
-function Index() {
-  const { user } = useAuth();
+export default function HomePage() {
+  const { user } = useAuth()
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -50,10 +31,10 @@ function Index() {
             Flight Price Notifier
           </span>
           <Link
-            to={user ? "/app" : "/signin"}
+            to={user ? '/app' : '/signin'}
             className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
-            {user ? "前往儀表板" : "Sign in / 登入"}
+            {user ? '前往儀表板' : 'Sign in / 登入'}
           </Link>
         </div>
       </header>
@@ -114,5 +95,5 @@ function Index() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
