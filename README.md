@@ -70,3 +70,7 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## References
+
+- [Travelpayouts](https://www.travelpayouts.com/) — travel affiliate partnership platform; its Drive script is embedded in [index.html](index.html) for monetization.
